@@ -1,0 +1,27 @@
+.home-component {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 50%;
+  padding: 20vh 0;
+  form input {
+    width: 200px;
+    margin-right: 10px;
+  }
+  .board-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 50px;
+    .board-link {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgb(230, 230, 230);
+      a {
+        text-decoration: none;
+        color: black;
+      }
+    }
+  }
+}
