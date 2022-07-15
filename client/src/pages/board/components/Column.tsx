@@ -1,41 +1,43 @@
-import { useState } from 'react'
 import { Column as ColumnModel } from '../../../model'
+import { CgAdd } from "react-icons/cg"
+import { TbTrash } from "react-icons/tb"
+import Card from './Card'
+import { useDispatch } from 'react-redux'
+import { removeColumn } from '../../../state/slices/boardsSlice'
 
 
 type Props = {
   column: ColumnModel
-  boardId: number
+  triggerUseEffect: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function Column({ column, boardId }: Props) {
-  const [showColumnCreate, setShowColumnCreate] = useState<boolean>(false)
-  const [columnTitle, setColumnTitle] = useState<string>('')
+export default function Column({ column, triggerUseEffect }: Props) {
+  const dispatch = useDispatch()
   
-  const handleCreate = (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    const newColumn:ColumnModel = {
-      id: new Date().valueOf(),
-      title: columnTitle,
-      board: boardId,
-      cards: []
-    }
-    
+  const handleDelete = () => {
+    dispatch(removeColumn({ boardId: column.board, columnId: column.id }))
+    triggerUseEffect(true)
   }
   
   return (
     <div className='column'>
-      <span onClick={() => setShowColumnCreate(true)}>+ Créer une colonne</span>
-      <form onSubmit={handleCreate}>
-        <input
-          type='text'
-          placeholder='Nom de la colonne'
-          value={columnTitle}
-          onChange={e => setColumnTitle(e.target.value)}
-          required
-        />
-        <button>Créer</button>
-      </form>
+      <p className='title'>
+        {column.title}
+        <span onClick={handleDelete}>
+          <TbTrash />
+        </span>
+      </p>
+      <div className="card-list">
+        { column.cards.map(card => (
+          <Card card={card} key={card.id} />
+        ))}
+      </div>
+      <p className="add-btn">
+        <span>
+          <CgAdd />
+          Ajouter une carte
+        </span>
+      </p>
     </div>
   )
 }

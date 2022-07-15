@@ -1,5 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Board } from '../../model';
 import { addBoard, removeBoard } from '../../state/slices/boardsSlice';
 import { selectBoards } from '../../state/store';
@@ -41,11 +42,10 @@ export const Home:React.FC<Props> = () => {
     <div className="board-list">
       { boards.map(board => (
         <div className="board-link" key={board.id}>
-          <a
-            href={`board/${board.id}`}
+          <Link to={`/board/${board.id}`}
           >
             {board.title}
-          </a>
+          </Link>
           <span onClick={() => dispatch(removeBoard(board.id))}>Supprimer</span>
         </div>
       ))}

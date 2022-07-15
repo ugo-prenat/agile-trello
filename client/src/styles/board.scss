@@ -1,0 +1,94 @@
+@import './variables';
+
+.board-component {
+  width: 100%;
+  padding: 30px;
+  .top {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    h2 {
+      margin: 0;
+      font-weight: 700;
+    }
+    a {
+      display: flex;
+      align-items: center;
+      svg {
+        stroke-width: .5;
+        width: 23px;
+        height: 23px;
+        aspect-ratio: 1/1;
+        color: black;
+        margin-right: 10px;
+      }
+    }
+  }
+  .column-list {
+    display: flex;
+    .column {
+      width: 300px;
+      margin: 10px;
+      &:first-of-type {
+        margin-left: 0;
+      }
+      .title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 15px;
+      }
+      .card {
+        border: 1px solid $grey-color-200;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+        cursor: pointer;
+      }
+    }
+  }
+  .add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    background: $grey-color-100;
+    border-radius: 5px;
+    border: 1px dashed $grey-color-200;
+    font-size: 14px;
+    cursor: pointer;
+    span {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+    }
+    svg {
+      margin-right: 5px;
+      width: 18px;
+      height: 18px;
+      stroke-width: .3;
+    }
+    form {
+      display: flex;
+      width: 100%;
+      height: 21px;
+      padding: 15px;
+      input {
+        width: 100%;
+        border: none;
+        background: $grey-color-100;
+        padding: 0;
+      }
+      button {
+        display: flex;
+        align-items: center;
+        padding: 0;
+        background: none;
+        svg {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
