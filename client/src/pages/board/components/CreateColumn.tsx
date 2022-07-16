@@ -1,35 +1,22 @@
-import { useState } from "react"
-import { Column } from "../../../model"
+import React, { useState } from "react"
 import { CgAdd } from "react-icons/cg"
 import { IoClose } from "react-icons/io5"
-import { useDispatch } from "react-redux"
-import { addColumn } from "../../../state/slices/boardsSlice"
 
 type Props = {
   boardId: number
-  triggerUseEffect: React.Dispatch<React.SetStateAction<boolean>>
+  createColumn: (title: string, board: number) => void
 }
 
-export default function CreateColumn({ boardId, triggerUseEffect }: Props) {
+export default function CreateColumn({ boardId, createColumn }: Props) {
   const [showColumnCreate, setShowColumnCreate] = useState<boolean>(false)
   const [columnTitle, setColumnTitle] = useState<string>('')
   
-  const dispatch = useDispatch()
-  
   const handleCreate = (e: React.FormEvent) => {
     e.preventDefault()
-    
-    const newColumn:Column = {
-      id: new Date().valueOf(),
-      title: columnTitle,
-      board: boardId,
-      cards: []
-    }
+
+    createColumn(columnTitle, boardId)
     setColumnTitle('')
     setShowColumnCreate(false)
-    dispatch(addColumn(newColumn))
-    // 
-    triggerUseEffect(true)
   }
   
   return (
@@ -53,7 +40,7 @@ export default function CreateColumn({ boardId, triggerUseEffect }: Props) {
               <CgAdd />
               Créer une colonne
             </span>
-          }
+        }
         </div>
     </div>
   )

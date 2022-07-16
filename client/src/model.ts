@@ -1,6 +1,7 @@
 export interface Card {
   id: number
   title: string
+  board: number
   column: number
 }
 export interface Column {

@@ -8,8 +8,5 @@ const store = configureStore({
 })
 
 export type RootState = ReturnType<typeof store.getState>
-
 export const selectBoards = (state: RootState) => state.boards.boards
-
-
 export default store

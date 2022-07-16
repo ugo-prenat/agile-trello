@@ -1,26 +1,42 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Board as BoardModel} from '../../model'
 import { selectBoards } from '../../state/store';
 import { HiOutlineHome } from "react-icons/hi"
+import { Column as ColumnModel } from '../../model'
 
 import Column from './components/Column';
 import CreateColumn from './components/CreateColumn';
+import { addColumn, removeColumn } from '../../state/slices/boardsSlice';
 
 type Props = {};
 
 export const Board:React.FC<Props> = () => {
   let { id } = useParams()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  
   const boards:BoardModel[] = useSelector(selectBoards)
+  const [board, setBoard] = useState<BoardModel>()
   
   const getBoardById = (id: string) => {
     return boards.filter(board => board.id === +id)[0]
   }
   
-  const [board, setBoard] = useState<BoardModel>()
-  const [triggerUseEffect, setTriggerUseEffect] = useState<boolean>(false)
+  
+  const createColumn = (title: string, board: number) => {
+    const newColumn:ColumnModel = {
+      id: new Date().valueOf(),
+      title,
+      board,
+      cards: []
+    }
+    dispatch(addColumn(newColumn))
+  }
+  const deleteColumn = (boardId: number, columnId: number) => {
+    dispatch(removeColumn({ boardId, columnId }))
+  }
   
   useEffect(() => {
     if (!id) return navigate('/')
@@ -28,9 +44,8 @@ export const Board:React.FC<Props> = () => {
     const tempBoard = getBoardById(id)
     if (!tempBoard) return navigate('/')
     setBoard(tempBoard)
-    console.log(tempBoard);
     // eslint-disable-next-line
-  }, [triggerUseEffect])
+  }, [createColumn, deleteColumn])
   
   
   
@@ -39,19 +54,21 @@ export const Board:React.FC<Props> = () => {
       <Link to='/'><HiOutlineHome /></Link>
       <h2>{board?.title}</h2>
     </div>
-    <div className='column-list'>
-      { board?.columns.map(column => (
-        <Column
-          column={column}
-          triggerUseEffect={setTriggerUseEffect}
-          key={column.id}
+    <div  className='column-wrapper'>
+      <div className='column-list'>
+        { board?.columns.map(column => (
+          <Column
+            column={column}
+            deleteColumn={deleteColumn}
+            key={column.id}
+          />
+        )) }
+        
+        <CreateColumn
+          boardId={board?.id ? board.id : 0}
+          createColumn={createColumn}
         />
-      )) }
-      
-      <CreateColumn
-        boardId={board?.id ? board.id : 0}
-        triggerUseEffect={setTriggerUseEffect}
-      />
+      </div>
     </div>
   </div>
 }
