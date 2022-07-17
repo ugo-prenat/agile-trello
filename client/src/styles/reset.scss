@@ -24,7 +24,7 @@ button {
   background: $success-color;
   cursor: pointer;
 }
-input {
+input, textarea {
   font-family: $poppins;
   border: 1px solid black;
   outline: none;

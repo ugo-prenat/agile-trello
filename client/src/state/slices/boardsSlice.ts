@@ -61,6 +61,7 @@ export const boardSlice = createSlice({
         if (board.id === action.payload.board) {
           board.columns.push(action.payload)
         }
+        return state
       })
     },
     removeColumn: (state: any, action: PayloadAction<{boardId: number, columnId: number}>) => {
@@ -68,6 +69,7 @@ export const boardSlice = createSlice({
         if (board.id === action.payload.boardId) {
           board.columns = board.columns.filter((column:Column) => column.id !== action.payload.columnId)
         }
+        return state
       })
     },
     addCard: (state: any, action: PayloadAction<Card>) => {
@@ -77,18 +79,43 @@ export const boardSlice = createSlice({
             if (column.id === action.payload.column) {
               column.cards.push(action.payload)
             }
+            return state
           })
         }
+        return state
       })
     },
     removeCard: (state: any, action: PayloadAction<Card>) => {
       state.boards.map((board:Board) => {
-        board.columns.map((column:Column) => {
-          if (column.id === action.payload.column) {
-            const newColumn:Column = { ...column, cards: [...column.cards, action.payload] }
-            board.columns = [...board.columns, newColumn]
-          }
-        })
+        if (board.id === action.payload.board) {
+          board.columns.map((column:Column) => {
+            if (column.id === action.payload.column) {
+              const newCards:Card[] = column.cards.filter(card => card.id !== action.payload.id)
+              column.cards = newCards
+            }
+            return state
+          })
+        }
+        return state
+      })
+    },
+    editCard: (state: any, action: PayloadAction<Card>) => {
+      state.boards.map((board:Board) => {
+        if (board.id === action.payload.board) {
+          board.columns.map((column:Column) => {
+            if (column.id === action.payload.column) {
+              column.cards.map((card:Card, index: number) => {
+                if (card.id === action.payload.id) {
+                  //column.cards[index] = {...card, title: action.payload.title }
+                  column.cards[index] = action.payload
+                }
+                return state
+              })
+            }
+            return state
+          })
+        }
+        return state
       })
     },
   },
@@ -97,7 +124,7 @@ export const boardSlice = createSlice({
 export const {
   addBoard, removeBoard,
   addColumn, removeColumn,
-  addCard, removeCard
+  addCard, removeCard, editCard
 } = boardSlice.actions
 
 export default boardSlice.reducer

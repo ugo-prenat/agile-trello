@@ -1,12 +1,10 @@
-import { Board, Column as ColumnModel } from '../../../model'
+import { Column as ColumnModel } from '../../../model'
 import { TbTrash } from "react-icons/tb"
 import Card from './Card'
 import CreateCard from './CreateCard'
 import { Card as CardModel } from '../../../model'
-import { useDispatch, useSelector } from 'react-redux'
-import { addCard, removeCard } from '../../../state/slices/boardsSlice'
-import { useEffect } from 'react'
-import { selectBoards } from '../../../state/store'
+import { useDispatch } from 'react-redux'
+import { addCard, editCard, removeCard } from '../../../state/slices/boardsSlice'
 
 
 type Props = {
@@ -15,7 +13,7 @@ type Props = {
 }
 
 export default function Column({ column, deleteColumn }: Props) {
-  const boards:Board[] = useSelector(selectBoards)
+  //const boards:Board[] = useSelector(selectBoards)
   const dispatch = useDispatch()
   
   const createCard = (title: string) => {
@@ -27,28 +25,9 @@ export default function Column({ column, deleteColumn }: Props) {
     }
     dispatch(addCard(newCard))
   }
-  const deleteCard = (card:CardModel) => {
-    dispatch(removeCard(card))
-  }
+  const deleteCard = (card:CardModel) => dispatch(removeCard(card))
+  const updateCard = (card:CardModel) => dispatch(editCard(card))
   
-  const getColumnById = (id:number) => {
-    let searchColumn:ColumnModel = boards[0].columns[0]
-    
-    boards.map((board:Board) => {
-      board.columns.map((column:ColumnModel) => {
-        if (column.id === id) {
-          searchColumn = column
-        }
-      })
-    })
-    return searchColumn
-  }
-  
-  useEffect(() => {
-    const tempColumn = getColumnById(column.id)
-    console.log(tempColumn);
-    
-  }, [ createCard, deleteCard ]);
   
   return (
     <div className='column'>
@@ -63,6 +42,7 @@ export default function Column({ column, deleteColumn }: Props) {
           <Card
             card={card}
             deleteCard={deleteCard}
+            updateCard={updateCard}
             key={card.id}
           />
         ))}
