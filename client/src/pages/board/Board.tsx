@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { DragDropContext, DropResult } from 'react-beautiful-dnd'
+
 import { Board as BoardModel} from '../../model'
 import { selectBoards } from '../../state/store';
-import { HiOutlineHome } from "react-icons/hi"
+import { IoArrowBack } from "react-icons/io5"
 import { Column as ColumnModel } from '../../model'
 
 import Column from './components/Column';
@@ -23,7 +25,6 @@ export const Board:React.FC<Props> = () => {
   const getBoardById = (id: string) => {
     return boards.filter(board => board.id === +id)[0]
   }
-  
   
   const createColumn = (title: string, board: number) => {
     const newColumn:ColumnModel = {
@@ -47,28 +48,40 @@ export const Board:React.FC<Props> = () => {
     // eslint-disable-next-line
   }, [createColumn, deleteColumn])
   
+  const handleDragEnd = (result:DropResult) => {
+    const { source, destination } = result
+    if (!destination) return
+    console.log('drag end');
+    console.log(result);
+  }
   
   
-  return <div className='board-component'>
-    <div className='top'>
-      <Link to='/'><HiOutlineHome /></Link>
-      <h2>{board?.title}</h2>
-    </div>
-    <div  className='column-wrapper'>
-      <div className='column-list'>
-        { board?.columns.map(column => (
-          <Column
-            column={column}
-            deleteColumn={deleteColumn}
-            key={column.id}
-          />
-        )) }
-        
-        <CreateColumn
-          boardId={board?.id ? board.id : 0}
-          createColumn={createColumn}
-        />
+  return (
+    <DragDropContext
+      onDragEnd={handleDragEnd}
+    >
+      <div className='board-component'>
+        <div className='top'>
+          <Link to='/'><IoArrowBack /></Link>
+          <h2>{board?.title}</h2>
+        </div>
+        <div  className='column-wrapper'>
+          <div className='column-list'>
+            { board?.columns.map(column => (
+              <Column
+                column={column}
+                deleteColumn={deleteColumn}
+                key={column.id}
+              />
+            )) }
+            
+            <CreateColumn
+              boardId={board?.id ? board.id : 0}
+              createColumn={createColumn}
+            />
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
+    </DragDropContext>
+  )
 }

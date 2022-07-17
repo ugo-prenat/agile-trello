@@ -5,6 +5,7 @@ import CreateCard from './CreateCard'
 import { Card as CardModel } from '../../../model'
 import { useDispatch } from 'react-redux'
 import { addCard, editCard, removeCard } from '../../../state/slices/boardsSlice'
+import { Droppable } from 'react-beautiful-dnd'
 
 
 type Props = {
@@ -37,16 +38,21 @@ export default function Column({ column, deleteColumn }: Props) {
           <TbTrash />
         </span>
       </p>
-      <div className="card-list">
-        { column.cards.map(card => (
-          <Card
-            card={card}
-            deleteCard={deleteCard}
-            updateCard={updateCard}
-            key={card.id}
-          />
-        ))}
-      </div>
+      <Droppable droppableId={column.id.toString()}>
+        { (provided) => (
+          <div className="card-list" {...provided.droppableProps} ref={provided.innerRef}>
+            { column.cards.map((card, index) => (
+              <Card
+                card={card}
+                deleteCard={deleteCard}
+                updateCard={updateCard}
+                key={card.id}
+                index={index}
+              />
+            ))}
+          </div>
+        )}
+      </Droppable>
       <CreateCard
         createCard={createCard}
       />

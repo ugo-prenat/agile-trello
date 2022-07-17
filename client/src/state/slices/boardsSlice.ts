@@ -8,41 +8,32 @@ export interface BoardState {
 
 const initialState: BoardState = {
   boards: [
-    { id: 1657812243952, title: 'Premier tableau', columns: [
+    { id: 1, title: 'Basic Agile Board', columns: [
       {
-        id: 1657812243953,
-        title: 'colonne 1',
-        board: 1657812243952,
-        cards: [
-          {
-            id: new Date().valueOf(),
-            title: 'Card 01',
-            board: 1657812243952,
-            column: 1657812243953
-          },
-          {
-            id: new Date().valueOf()+3,
-            title: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-            molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-            numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-            optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis
-            obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam
-            nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit,
-            tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit,
-            quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos`,
-            board: 1657812243952,
-            column: 1657812243953
-          }
-        ]
+        id: new Date().valueOf(),
+        title: 'Stories',
+        board: 1,
+        cards: []
       },
       {
-        id: new Date().valueOf()+12,
-        title: 'colonne 2',
-        board: 1657812243952,
+        id: new Date().valueOf()+10,
+        title: 'To do',
+        board: 1,
+        cards: []
+      },
+      {
+        id: new Date().valueOf()+20,
+        title: 'In progress',
+        board: 1,
+        cards: []
+      },
+      {
+        id: new Date().valueOf()+30,
+        title: 'Done',
+        board: 1,
         cards: []
       }
     ] },
-    { id: 1657812243932, title: 'Un autre', columns: [] }
   ]
 }
 
@@ -106,7 +97,6 @@ export const boardSlice = createSlice({
             if (column.id === action.payload.column) {
               column.cards.map((card:Card, index: number) => {
                 if (card.id === action.payload.id) {
-                  //column.cards[index] = {...card, title: action.payload.title }
                   column.cards[index] = action.payload
                 }
                 return state

@@ -4,7 +4,7 @@ import { Board as BoardPage } from "./pages/board/Board";
 import { Home } from "./pages/home/Home";
 import { Login } from "./pages/login/Login";
 
-function App() {
+const App = () => {
 
   return (
     <div className="App">
