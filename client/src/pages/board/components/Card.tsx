@@ -78,7 +78,7 @@ export default function Card({ card, deleteCard, updateCard, index }: Props) {
           </div>
         )}
       </Draggable>
-      { showCardDetail && <CardDetail card={card} hideDetail={setShowCardDetail} /> }
+      { showCardDetail && <CardDetail card={card} showDetail={setShowCardDetail} /> }
     </>
   )
 }

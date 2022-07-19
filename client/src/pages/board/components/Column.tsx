@@ -31,31 +31,32 @@ export default function Column({ column, deleteColumn }: Props) {
   
   
   return (
-    <div className='column'>
-      <p className='title'>
-        {column.title}
-        <span onClick={() => deleteColumn(column.board, column.id)}>
-          <TbTrash />
-        </span>
-      </p>
-      <Droppable droppableId={column.id.toString()}>
-        { (provided) => (
-          <div className="card-list" {...provided.droppableProps} ref={provided.innerRef}>
-            { column.cards.map((card, index) => (
-              <Card
-                card={card}
-                deleteCard={deleteCard}
-                updateCard={updateCard}
-                key={card.id}
-                index={index}
-              />
-            ))}
-          </div>
-        )}
-      </Droppable>
-      <CreateCard
-        createCard={createCard}
-      />
-    </div>
+    <Droppable droppableId={column.id.toString()}>
+      { (provided, snapshot) => (
+        <div className='column' id={column.id.toString()}>
+          <p className='title' style={{borderBottom: `1px solid #${column.color}`}}>
+            {column.title}
+            <span onClick={() => deleteColumn(column.board, column.id)}>
+              <TbTrash />
+            </span>
+          </p>
+            <div className="card-list" {...provided.droppableProps} ref={provided.innerRef}>
+              { column.cards.map((card, index) => (
+                <Card
+                  card={card}
+                  deleteCard={deleteCard}
+                  updateCard={updateCard}
+                  key={card.id}
+                  index={index}
+                />
+              ))}
+              {provided.placeholder}
+            </div>
+          <CreateCard
+            createCard={createCard}
+          />
+        </div>
+      )}
+    </Droppable>
   )
 }

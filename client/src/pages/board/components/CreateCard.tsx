@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { CgAdd } from "react-icons/cg"
-import { IoClose } from "react-icons/io5";
+import { IoClose, IoAddSharp } from "react-icons/io5";
 
 type Props = {
   createCard: (title: string) => void
@@ -34,10 +33,7 @@ export default function CreateCard({ createCard }: Props) {
             <button type="button" onClick={() => {setShowCardCreate(false);setCardTitle('')}}><IoClose /></button>
           </form>
         :
-          <span onClick={() => setShowCardCreate(true)}>
-            <CgAdd />
-            Ajouter une carte
-          </span>
+          <span onClick={() => setShowCardCreate(true)}><IoAddSharp /></span>
       }
     </div>
   )

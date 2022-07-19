@@ -8,6 +8,7 @@ export interface Column {
   id: number
   title: string
   board: number
+  color: string,
   cards: Card[]
 }
 export interface Board {

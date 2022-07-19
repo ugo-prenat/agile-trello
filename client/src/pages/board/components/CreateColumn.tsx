@@ -1,6 +1,5 @@
 import React, { useState } from "react"
-import { CgAdd } from "react-icons/cg"
-import { IoClose } from "react-icons/io5"
+import { IoClose, IoAddSharp } from "react-icons/io5"
 
 type Props = {
   boardId: number
@@ -36,10 +35,7 @@ export default function CreateColumn({ boardId, createColumn }: Props) {
               <button type="button" onClick={() => {setShowColumnCreate(false);setColumnTitle('')}}><IoClose /></button>
             </form>
           :
-            <span onClick={() => setShowColumnCreate(true)}>
-              <CgAdd />
-              Créer une colonne
-            </span>
+            <span onClick={() => setShowColumnCreate(true)}><IoAddSharp /></span>
         }
         </div>
     </div>
