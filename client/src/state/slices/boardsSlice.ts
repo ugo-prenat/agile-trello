@@ -10,10 +10,10 @@ export interface BoardState {
 const initialState: BoardState = {
   boards: [
     { id: 1, title: 'Basic Agile Board', columns: [
-      { id: new Date().valueOf(), title: 'Stories', color: 'afa', board: 1, cards: [] },
-      { id: new Date().valueOf()+10, title: 'To do', color: 'faa', board: 1, cards: [] },
-      { id: new Date().valueOf()+20, title: 'In progress', color: 'aaf', board: 1, cards: [] },
-      { id: new Date().valueOf()+30, title: 'Done', color: 'ffsad', board: 1, cards: [] }
+      { id: new Date().valueOf(), title: 'Stories', color: '673ab7', board: 1, cards: [] },
+      { id: new Date().valueOf()+10, title: 'To do', color: '4caf50', board: 1, cards: [] },
+      { id: new Date().valueOf()+20, title: 'In progress', color: 'f44336', board: 1, cards: [] },
+      { id: new Date().valueOf()+30, title: 'Done', color: 'ffc107', board: 1, cards: [] }
     ]},
   ]
 }

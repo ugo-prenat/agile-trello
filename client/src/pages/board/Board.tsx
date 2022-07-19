@@ -45,15 +45,11 @@ export const Board:React.FC<Props> = () => {
       id: new Date().valueOf(),
       title,
       board,
-      color: 'ffa',
+      color: '000000',
       cards: []
     }
     dispatch(addColumn(newColumn))
   }
-  const deleteColumn = (boardId: number, columnId: number) => {
-    dispatch(removeColumn({ boardId, columnId }))
-  }
-  
   
   useEffect(() => {
     if (!id) return navigate('/')
@@ -62,7 +58,7 @@ export const Board:React.FC<Props> = () => {
     if (!tempBoard) return navigate('/')
     setBoard(tempBoard)
     // eslint-disable-next-line
-  }, [createColumn, deleteColumn])
+  }, [createColumn])
   
   const handleDragEnd = (result:DropResult) => {
     const { source, destination } = result
@@ -103,7 +99,7 @@ export const Board:React.FC<Props> = () => {
             { board?.columns.map(column => (
               <Column
                 column={column}
-                deleteColumn={deleteColumn}
+                /* deleteColumn={deleteColumn} */
                 key={column.id}
               />
             )) }
