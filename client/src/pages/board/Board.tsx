@@ -50,6 +50,8 @@ export const Board:React.FC<Props> = () => {
     }
     dispatch(addColumn(newColumn))
   }
+  const triggerUseEffect = () => {return}
+  
   
   useEffect(() => {
     if (!id) return navigate('/')
@@ -57,8 +59,11 @@ export const Board:React.FC<Props> = () => {
     const tempBoard = getBoardById(id)
     if (!tempBoard) return navigate('/')
     setBoard(tempBoard)
+    console.log('board was triggred');
+    
     // eslint-disable-next-line
-  }, [createColumn])
+    
+  }, [createColumn, triggerUseEffect])
   
   const handleDragEnd = (result:DropResult) => {
     const { source, destination } = result
@@ -70,24 +75,11 @@ export const Board:React.FC<Props> = () => {
   const handleDragStart = () => {
     
   }
-  const handleDragUpdate = (result:DropResult) => {
-    const { source, destination } = result
-    if (!destination) return
-    //console.log(result);
-    
-    const overCardList:HTMLElement | null = document.querySelector(`.board-component .column-list .column[id="${destination.droppableId}"] .card-list`)
-    if (overCardList) {
-      //overCardList.style.height = overCardList.offsetHeight + 56 + 'px'
-    }
-    
-    
-  }
   
   return (
     <DragDropContext
       onDragEnd={handleDragEnd}
       onDragStart={handleDragStart}
-      onDragUpdate={handleDragUpdate}
     >
       <div className='board-component'>
         <div className='top'>
@@ -99,7 +91,7 @@ export const Board:React.FC<Props> = () => {
             { board?.columns.map(column => (
               <Column
                 column={column}
-                /* deleteColumn={deleteColumn} */
+                updateBoard={triggerUseEffect}
                 key={column.id}
               />
             )) }

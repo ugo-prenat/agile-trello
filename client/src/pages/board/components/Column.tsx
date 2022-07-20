@@ -6,14 +6,15 @@ import { useDispatch } from 'react-redux'
 import { addCard, editCard, removeCard } from '../../../state/slices/boardsSlice'
 import { Droppable } from 'react-beautiful-dnd'
 import ColumnOptions from './ColumnOptions'
+import { useEffect } from 'react'
 
 
 type Props = {
   column: ColumnModel
-  /* deleteColumn: (boardId: number, columnId: number) => void */
+  updateBoard: () => void
 }
 
-export default function Column({ column }: Props) {
+export default function Column({ column, updateBoard }: Props) {
   //const boards:Board[] = useSelector(selectBoards)
   const dispatch = useDispatch()
   
@@ -29,15 +30,18 @@ export default function Column({ column }: Props) {
   const deleteCard = (card:CardModel) => dispatch(removeCard(card))
   const updateCard = (card:CardModel) => dispatch(editCard(card))
   
-  
   return (
     <Droppable droppableId={column.id.toString()}>
       { (provided, snapshot) => (
-        <div className='column' id={column.id.toString()}>
+        <div className='column'>
           <div className='column-top'>
             <p className="title" style={{ color: `#${column.color}` }}>{column.title}</p>
             <div className='right-part'>
-              <ColumnOptions board={column.board} column={column.id} />
+              <ColumnOptions
+                board={column.board}
+                column={column.id}
+                updateBoard={updateBoard}
+              />
               <p className="total-card" style={{ color: `#${column.color}` }}>{column.cards.length}</p>
             </div>
           </div>
